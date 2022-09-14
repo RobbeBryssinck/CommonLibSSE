@@ -30,8 +30,8 @@ namespace RE
 		void  UpdateImpl(float a_delta) override;                                                                                                                                         // AB
 		bool  ProcessImpacts() override;                                                                                                                                                  // AC
 		void  Update3D() override;                                                                                                                                                        // AD
-		float GetPowerSpeedMult() override;                                                                                                                                               // AF
-		float GetWeaponSpeedMult() override;                                                                                                                                              // B0
+		float GetPowerSpeedMult() const override;                                                                                                                                         // AF
+		float GetWeaponSpeedMult() const override;                                                                                                                                        // B0
 		bool  GetStopMainSoundAfterImpact() override;                                                                                                                                     // B1 - { return 1; }
 		float GetGravity() override;                                                                                                                                                      // B5
 		bool  ShouldBeLimited() override;                                                                                                                                                 // B9 - { return (unk1CC >> 22) & 1; }

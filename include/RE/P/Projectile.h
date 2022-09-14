@@ -143,8 +143,8 @@ namespace RE
 		virtual bool          ProcessImpacts();                                                                                                                                                  // AC
 		virtual void          Update3D();                                                                                                                                                        // AD
 		virtual void          Unk_AE(void);                                                                                                                                                      // AE - { return 0; }
-		virtual float         GetPowerSpeedMult();                                                                                                                                               // AF - { if (unk158) return 1.0; else return unk188; } - "float GetSpeed()"?
-		virtual float         GetWeaponSpeedMult();                                                                                                                                              // B0 - { return 1.0; }
+		virtual float         GetPowerSpeedMult() const;                                                                                                                                         // AF - { if (unk158) return 1.0; else return unk188; } - "float GetSpeed()"?
+		virtual float         GetWeaponSpeedMult() const;                                                                                                                                        // B0 - { return 1.0; }
 		virtual bool          GetStopMainSoundAfterImpact();                                                                                                                                     // B1 - { return 0; }
 		virtual void          ReportHavokDeactivation();                                                                                                                                         // B2 - { return; }
 		virtual bool          TurnOff(Actor* a_owner, bool a_noDeactivateSound);                                                                                                                 // B3
@@ -168,6 +168,15 @@ namespace RE
 			auto obj = GetObjectReference();
 			auto projectile = obj ? obj->As<BGSProjectile>() : nullptr;
 			return projectile ? projectile->data.collisionRadius * 2 : 0.0f;
+		}
+		inline float GetSpeed() const
+		{
+			auto obj = GetObjectReference();
+			auto projectile = obj ? obj->As<BGSProjectile>() : nullptr;
+			if (!projectile)
+				return 0.0f;
+
+			return projectile->data.speed * GetPowerSpeedMult() * GetWeaponSpeedMult() * speedMult;
 		}
 
 		// Has been extensively tested in Skyrim Together, can leave the unknown fields null.

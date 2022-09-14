@@ -3,6 +3,7 @@
 #include "RE/B/BGSProjectile.h"
 #include "RE/B/BSAtomic.h"
 #include "RE/B/BSPointerHandle.h"
+#include "RE/B/BSPointerHandleSmartPointer.h"
 #include "RE/B/BSSoundHandle.h"
 #include "RE/B/BSTList.h"
 #include "RE/C/CollisionLayers.h"
@@ -11,6 +12,7 @@
 #include "RE/N/NiSmartPointer.h"
 #include "RE/N/NiTransform.h"
 #include "RE/T/TESObjectREFR.h"
+#include "RE/B/BSTSingleton.h"
 
 namespace RE
 {
@@ -27,10 +29,30 @@ namespace RE
 	public:
 		inline static constexpr auto RTTI = RTTI_Projectile;
 
+		struct WobbleControl
+		{
+		public:
+			// members
+			uint8_t unk00[0x2C];
+		};
+		static_assert(sizeof(WobbleControl) == 0x2C);
+
+		class Manager : public BSTSingletonSDM<Manager>
+		{
+		public:
+			// members
+			BSTArray<BSPointerHandleSmartPointer<BSPointerHandleManagerInterface<Projectile>>> unlimited;	   // 08
+			BSTArray<BSPointerHandleSmartPointer<BSPointerHandleManagerInterface<Projectile>>> limited;		   // 20
+			BSTArray<BSPointerHandleSmartPointer<BSPointerHandleManagerInterface<Projectile>>> pending;		   // 38
+			BSSpinLock                                                                         projectileLock; // 50
+			BSTArray<WobbleControl>                                                            wobble;         // 58
+		};
+
 		struct LaunchData
 		{
 			virtual ~LaunchData();
 
+			// members
 			NiPoint3					origin;					// 08
 			NiPoint3					contactNormal;			// 14
 			BGSProjectile*				projectileBase;			// 20

@@ -3,7 +3,6 @@
 #include "RE/B/BGSProjectile.h"
 #include "RE/B/BSAtomic.h"
 #include "RE/B/BSPointerHandle.h"
-#include "RE/B/BSPointerHandleSmartPointer.h"
 #include "RE/B/BSSoundHandle.h"
 #include "RE/B/BSTList.h"
 #include "RE/C/CollisionLayers.h"
@@ -43,11 +42,11 @@ namespace RE
 			static Manager* GetSingleton();
 
 			// members
-			BSTArray<BSPointerHandleSmartPointer<BSPointerHandleManagerInterface<Projectile>>> unlimited;	   // 08
-			BSTArray<BSPointerHandleSmartPointer<BSPointerHandleManagerInterface<Projectile>>> limited;		   // 20
-			BSTArray<BSPointerHandleSmartPointer<BSPointerHandleManagerInterface<Projectile>>> pending;		   // 38
-			BSSpinLock                                                                         projectileLock; // 50
-			BSTArray<WobbleControl>                                                            wobble;         // 58
+			BSTArray<ProjectileHandle> unlimited;	   // 08
+			BSTArray<ProjectileHandle> limited;		   // 20
+			BSTArray<ProjectileHandle> pending;		   // 38
+			BSSpinLock                 projectileLock; // 50
+			BSTArray<WobbleControl>    wobble;         // 58
 		};
 
 		struct LaunchData

@@ -40,6 +40,8 @@ namespace RE
 		class Manager : public BSTSingletonSDM<Manager>
 		{
 		public:
+			static Manager* GetSingleton();
+
 			// members
 			BSTArray<BSPointerHandleSmartPointer<BSPointerHandleManagerInterface<Projectile>>> unlimited;	   // 08
 			BSTArray<BSPointerHandleSmartPointer<BSPointerHandleManagerInterface<Projectile>>> limited;		   // 20

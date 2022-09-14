@@ -2,6 +2,12 @@
 
 namespace RE
 {
+	Projectile::Manager* Projectile::Manager::GetSingleton()
+	{
+		REL::Relocation<Projectile::Manager**> singleton{ RELOCATION_ID(514313, 400473) };
+		return *singleton;
+	}
+
 	BSPointerHandle<Projectile>* Projectile::Launch(BSPointerHandle<Projectile>* a_result, LaunchData& a_data) noexcept
 	{
 		using func_t = decltype(&Projectile::Launch);
